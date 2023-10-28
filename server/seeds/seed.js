@@ -20,12 +20,22 @@ db.once('open', async () => {
   users.map((user) => userIds.push(user._id));
   console.log(userIds);
 
-  post.map(async (apost) => {
-    apost.author = userIds[0];
-    console.log(apost);
+  const categoryIds = [];
+  categories.map((category) => categoryIds.push(category._id));
+  console.log(categoryIds);
+
+  post.map(async (aPost) => {
+    aPost.author = userIds[Math.floor(Math.random() * userIds.length)];
+    aPost.categories = categoryIds[Math.floor(Math.random() * categoryIds.length)];
+    console.log(aPost);
   })
-  
-  await Post.insertMany(post);
+
+  const posts = await Post.insertMany(post);
+
+  const postIds = [];
+  posts.map((post) => postIds.push(post._id));
+  console.log(postIds);
+  // users.map((user) => user.posts = )
 
   console.log('posts seeded');
 
